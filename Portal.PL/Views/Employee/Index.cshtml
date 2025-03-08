@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout="~/Views/Shared/_AdminDashBoard.cshtml";
+    ViewData["Title"] = "Index";
+}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+           Get All Employee
+        </h3>
+        <div class="flex gap-3">
+            <label class="switch switch-sm">
+              
+            </label>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <table class="table align-middle text-gray-700 font-medium text-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">FName</th>
+                    <th scope="col">LName</th>
+                    <th scope="col">Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.Employees)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.FName</td>
+                        <td>@item.LName</td>
+                        <td>@item.Salar</td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+   
+</div>
+
+
