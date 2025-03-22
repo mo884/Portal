@@ -8,7 +8,7 @@ namespace Portal.DAL.Repo.Abstraction
     {
         //Command
         (bool,string?) Create(Employee employee);
-        (bool, string?) Edit(Employee employee);
+        (bool, string?) Edit(Employee emp, int Id);
         bool IsDeleted(long  id);
         //Query
         Employee Get(Expression<Func<Employee, bool>> ? filter = null);

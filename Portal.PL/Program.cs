@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Portal.BL.Mapper;
+using Portal.DAL.DataBase;
+using Portal.DAL.Repo.Abstraction;
+using Portal.DAL.Repo.Impelementation;
+
 namespace Portal.PL
 {
     public class Program
@@ -8,6 +14,21 @@ namespace Portal.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            //Connection string
+            var connectionString = builder.Configuration.GetConnectionString("Essam");
+
+            builder.Services.AddDbContext<PortalDbContext>(options =>
+            options.UseLazyLoadingProxies().UseSqlServer(connectionString));
+            //builder.Services.AddScoped<IEmeployeeServices, Portal.BL.Services.Impelementation.test>();
+
+            builder.Services.AddScoped<IEmeployeeServices, EmployeeServices>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+
+
+            builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+
+            builder.Services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
 
             var app = builder.Build();
 

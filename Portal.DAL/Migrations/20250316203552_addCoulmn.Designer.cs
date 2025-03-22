@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portal.DAL.DataBase;
 
@@ -11,9 +12,11 @@ using Portal.DAL.DataBase;
 namespace Portal.DAL.Migrations
 {
     [DbContext(typeof(PortalDbContext))]
-    partial class PortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250316203552_addCoulmn")]
+    partial class addCoulmn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,44 +24,6 @@ namespace Portal.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Portal.DAL.Entities.Department", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Department");
-                });
 
             modelBuilder.Entity("Portal.DAL.Entities.Employee", b =>
                 {
@@ -82,9 +47,6 @@ namespace Portal.DAL.Migrations
 
                     b.Property<DateTime>("DeletedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeptId")
-                        .HasColumnType("int");
 
                     b.Property<string>("FName")
                         .IsRequired()
@@ -111,23 +73,7 @@ namespace Portal.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeptId");
-
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("Portal.DAL.Entities.Employee", b =>
-                {
-                    b.HasOne("Portal.DAL.Entities.Department", "Dept")
-                        .WithMany("Employees")
-                        .HasForeignKey("DeptId");
-
-                    b.Navigation("Dept");
-                });
-
-            modelBuilder.Entity("Portal.DAL.Entities.Department", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using Portal.DAL.DataBase;
 using Portal.DAL.Entities;
 using Portal.DAL.Repo.Abstraction;
@@ -9,9 +10,9 @@ namespace Portal.DAL.Repo.Impelementation
     public class EmployeeRepo : IEmployeeRepo
     {
         private readonly PortalDbContext db;
-        public EmployeeRepo()
+        public EmployeeRepo(PortalDbContext db)
         {
-            db = new PortalDbContext();
+            this.db = db;
         }
 
         public (bool, string?) Create(Employee employee)
@@ -29,11 +30,11 @@ namespace Portal.DAL.Repo.Impelementation
                 return (false, ex.Message);
             }
         }
-        public (bool, string?) Edit(Employee emp)
+        public (bool, string?) Edit(Employee emp , int Id)
         {
             try
             {
-                var employee = db.Employees.Where(a => a.Id == emp.Id).FirstOrDefault();
+                var employee = db.Employees.Where(a => a.Id == Id).FirstOrDefault();
                 if (employee == null)
                     return (false, "Employee Not Found In Local Db");
                 var result = employee.Edit("Mohamed Essam", emp.FName, emp.LName, emp.Age, emp.Salary);
@@ -81,7 +82,15 @@ namespace Portal.DAL.Repo.Impelementation
         public List<Employee> GetAll(Expression<Func<Employee, bool>>? filter = null)
         {
             if (filter == null)
-                return db.Employees.ToList();
+            {
+                var employees = db.Employees.ToList();
+                foreach (var item in employees)
+                {
+                    db.Entry(item).Reference(b => b.Dept);
+                }
+                return employees;
+            }
+               
             var result = db.Employees.Where(filter).ToList();
             return result;
         }
