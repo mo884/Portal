@@ -1,4 +1,8 @@
-﻿<!--begin::Header-->
+﻿@{
+	var Culture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+}
+
+<!--begin::Header-->
 <div id="kt_header" class="header">
 	<!--begin::Container-->
 	<div class="container-fluid d-flex flex-stack">
@@ -161,20 +165,43 @@
 					</div>
 					<!--end::Menu item-->
 					<!--begin::Menu separator-->
-					<div class="separator my-2"></div>
+					
 					<!--end::Menu separator-->
 					<!--begin::Menu item-->
-					<div class="menu-item px-5">
-						<a href="../../demo14/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-					</div>
+					@if (Culture == "ar-EG")
+					{
+						<div class="separator my-2"></div>
+						<div class="menu-item px-5">
+							<a class="menu-link px-5"
+							   href="@Url.Action("SetLanguage", "Language", new {
+                                                  culture = "en-US",
+                                                  returnUrl = Context.Request.Path + Context.Request.QueryString
+                                              })">
+
+								<span>English</span>
+							</a>
+
+						</div>
+					}
+					else
+					{
+						<!--begin::Menu separator-->
+						<div class="separator my-2"></div>
+						<!--end::Menu separator-->
+						<!--begin::Menu item-->
+						<div class="menu-item px-5 my-1">
+							<a class="menu-link px-5"
+							   href="@Url.Action("SetLanguage", "Language", new {
+                                                  culture = "ar-EG",
+                                                  returnUrl = Context.Request.Path + Context.Request.QueryString
+                                              })">
+								<span>Arabic</span>
+							</a>
+						</div>
+					}
+
 					<!--end::Menu item-->
-					<!--begin::Menu separator-->
-					<div class="separator my-2"></div>
-					<!--end::Menu separator-->
-					<!--begin::Menu item-->
-					<div class="menu-item px-5 my-1">
-						<a href="../../demo14/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
-					</div>
+					
 					<!--end::Menu item-->
 					<!--begin::Menu item-->
 					<div class="menu-item px-5">

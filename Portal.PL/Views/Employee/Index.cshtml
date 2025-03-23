@@ -2,7 +2,7 @@
 @model List<GetAllEmployeeVM>
 @{
     Layout="~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = SharedLocalizer["Create"];
 }
 
 
@@ -11,11 +11,11 @@
         background:red !important
     }
 </style>
-<a class=" btn btn-success" asp-controller="Employee" asp-action="Create"   >Create</a>
+<a class=" btn btn-success" asp-controller="Employee" asp-action="Create">@SharedLocalizer["Create"]</a>
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">
-           Get All Employee
+            @SharedLocalizer["GetAllEmployee"]
         </h3>
         <div class="flex gap-3">
             <label class="switch switch-sm">
@@ -29,8 +29,8 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">FName</th>
-                    <th scope="col">LName</th>
+                    <th scope="col"> @SharedLocalizer["FName"]</th>
+                    <th scope="col">@SharedLocalizer["LName"]</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -43,7 +43,7 @@
                         <td>@item.FName</td>
                         <td>@item.LName</td>
                         <td><img style="width:30px; width:30px" src="~/Files/Profiles/@item.Image" /></td>
-                        <td><a asp-controller="Employee" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-warning">Edit</a></td>
+                        <td><a asp-controller="Employee" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-warning">@SharedLocalizer["Edit"]</a></td>
                     </tr>
 
                 }

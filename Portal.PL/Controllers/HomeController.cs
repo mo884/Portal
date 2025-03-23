@@ -1,3 +1,4 @@
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Portal.PL.Models;
 using System.Diagnostics;
@@ -15,9 +16,19 @@ namespace Portal.PL.Controllers
 
         public IActionResult Index()
         {
+            Console.WriteLine("BeforeHangeFire");
+            BackgroundJob.Enqueue(()=> printMessageInConsole());
+            Console.WriteLine("AfterHangeFire");
+
+
             return View();
         }
-
+        public void printMessageInConsole()
+        {
+            Console.WriteLine("Print1");
+            Console.WriteLine("Print2"); 
+            Console.WriteLine("Print3");
+        }
         public IActionResult Privacy()
         {
             return View();
